@@ -1,0 +1,56 @@
+/ %h2.text-2xl.text-gray-700.m-0 Convenios
+
+/ Campo de entrada de búsqueda
+%div.flex.items-center.space-x-4.p-2
+  %div.relative.flex-grow
+    %input#search-box.form-input.input-bordered.w-full.rounded-lg.pl-2.pr-10{ type: "text",
+      placeholder: "Buscar por código, título, cliente o status ...",
+      "data-controller" => "filter",
+      "data-action" => "input->filter#search",
+      "data-turbo-permanent" => true,
+      autofocus: true
+    }
+    %i.fas.fa-search{ class: "absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" }
+  = link_to new_agreement_path, class: "btn btn-sm btn-circle btn-outline flex items-center justify-center" do
+    %span.tooltip.tooltip-warning.tooltip-left{"data-tip" => "Agregar nuevo convenio", }
+      %i.fas.fa-plus.text-xl
+
+/ Tabla de Convenios h-full
+-#%div.overflow-x-auto.overflow-y-auto.max-h-96
+%div.overflow-x-auto.overflow-y-auto.w-full{"style" => "height: calc(100vh - 200px);"}
+  %table.table.table-of-agreements.w-full.text-xs
+    %thead.sticky.top-0.bg-base-200.z-10
+      %tr
+        %th Código
+        %th Título
+        %th Tipo de Acuerdo
+        %th Propietario
+        %th Nombre de la Empresa
+        %th Status
+    %tbody{"data-controller" => "filter"}
+      - @agreements.each do |agreement|
+        / data: {turbo: false}, "data-turbo"=>"false",
+        / los nombres de los atributos sale del scope Agreement.for_table
+        %tr.cursor-pointer.hover:bg-gray-100{
+          "data-controller" => "navigate", "data-action" => "click->navigate#toShow", "data-navigate-url" => agreement_path(agreement),
+          "data-title" => agreement.title, "data-client" => agreement.client_name,
+          "data-status" => agreement.status_human, "data-code" => agreement.code,
+          "data-filter-target" => "agreementRow"}
+          %td{class: "w-[100px] text-right"}
+            %span.px-1.border{"data-code" => agreement.code}
+              = agreement.formatted_code
+          %td{"data-title" => agreement.title}= agreement.title
+          %td{class: "min-w-[200px]"}
+            -#%span.badge.badge-ghost.badge-xs.custom-badge-code
+              = agreement.type_acronym
+            %span{"data-type_name" => agreement.type_name}
+              = agreement.type_name
+          %td{class: "min-w-[130px]"}= @creators_on_agreements[agreement.creator_id.to_s.rjust(5, '0')]&.short_name
+          %td{"data-client" => agreement.client_name}= agreement.client_name
+          %td
+            - status_info = Agreement.status_info(agreement.status)
+            %span.flex.items-center.space-x-2{ class: status_info[:color] }
+              %i.pr-1{ class: status_info[:icon] }
+              %span{"data-status" => agreement.status_human}
+                = agreement.status_human || "N/A"
+

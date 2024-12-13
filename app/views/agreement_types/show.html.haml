@@ -1,0 +1,11 @@
+%h1= @agreement_type.name
+%p
+  %strong Description:
+  = @agreement_type.description
+%p
+  %strong Has Financial Terms:
+  = @agreement_type.has_financial_terms ? "Yes" : "No"
+
+= link_to 'Edit', edit_agreement_type_path(@agreement_type)
+|
+= link_to 'Back', agreement_types_path

@@ -1,0 +1,21 @@
+%h1 Agreement Types
+
+= link_to 'New Agreement Type', new_agreement_type_path, class: "btn btn-primary"
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th Actions
+  %tbody
+    - @agreement_types.each do |agreement_type|
+      %tr
+        %td= agreement_type.name
+        %td= agreement_type.description
+        %td
+          = link_to 'Show', agreement_type_path(agreement_type)
+          |
+          = link_to 'Edit', edit_agreement_type_path(agreement_type)
+          |
+          = link_to 'Delete', agreement_type_path(agreement_type), method: :delete, data: { confirm: 'Are you sure?' }

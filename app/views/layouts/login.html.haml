@@ -1,0 +1,12 @@
+!!!
+%html
+  %head
+    %title Acceso
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+    / { style: "background-image: url(#{image_path('cimav-mty.jpg')}); background-size: cover; background-position: center;" }
+  %body#login-body.bg-gray-100.flex.items-center.justify-center.h-screen
+    = yield

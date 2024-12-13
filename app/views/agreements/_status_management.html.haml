@@ -1,0 +1,25 @@
+%div.absolute.top-4.right-4.z-50
+  / %div.card.bg-base-100.w-full.max-w-sm.shrink-0.shadow-xl
+  %div.card.bg-base-100.w-full.max-w-sm.shrink-0.shadow-xl.border-t-1
+    .card-body.p-4
+      %div.flex.flex-col.items-center.space-y-1
+        %div.text-center
+          %span.text-lg.font-bold{ class: @agreement.status_color }
+            %i{ class: @agreement.status_icon }
+            = @agreement.status_human
+        %div.mt-0.text-sm.text-gray-500.text-center
+          = Agreement.status_info(@agreement.status)[:hint]
+      - allowed_statuses = agreement.allowed_status_changes(current_user)
+      - if allowed_statuses.any?
+        %div.flex.justify-center.space-x-2
+          - allowed_statuses.each do |status|
+            %form{ action: change_status_agreement_path(agreement), method: :post, "data-turbo-confirm" => "¿Estás seguro de cambiar el estado?" }
+              %input{ type: "hidden", name: "new_status", value: status }
+              %button.btn.btn-sm.flex.items-center{ class: Agreement.status_info(status)[:color], style: "display: flex; align-items: center; gap: 0.5rem;" }
+                %i{ class: Agreement.status_info(status)[:icon], style: "display: inline-block;" }
+                %span= Agreement.status_info(status)[:action]
+
+
+      -#- else
+        %p.text-gray-500.text-center No tienes permisos para cambiar el estado.
+

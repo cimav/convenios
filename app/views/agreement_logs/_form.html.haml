@@ -1,0 +1,13 @@
+= form_with model: AgreementLog.new, url: agreement_agreement_logs_path(agreement), method: :post, local: false, id: "new_agreement_log" do |f|
+  .form-control
+    = f.text_area :message, class: "textarea textarea-bordered w-full", placeholder: "Escribir el mensaje de seguimiento..."
+    %p.text-sm.text-gray-500.mt-1 Los mensajes son enviados por correo a todos los participantes y al jurídico.
+    #form_errors
+  .flex.justify-end.space-x-2.mt-4
+    = f.button type: "submit", class: "btn btn-circle btn-outline" do
+      %div.tooltip.tooltip-warning.absolute.tooltip-left{ style: "","data-tip" => "Guardar seguimiento  " }
+        %i.fas.fa-arrow-up.text-lg
+
+    = link_to agreement_path(agreement), class: "btn btn-circle btn-secondary" do
+      %div.tooltip.tooltip-warning.absolute.tooltip-left{ style: "","data-tip" => "Volver al convenio", }
+        %i.fas.fa-arrow-left.text-lg

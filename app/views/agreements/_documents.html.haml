@@ -1,0 +1,85 @@
+%h4.text-xl.mb-4.text-gray-700 Documentos
+
+%ul.list-disc.pl-5.space-y-2
+  - if agreement.documents.any?
+    %table.table.w-full
+      %thead
+        %tr
+          %th.text-left Tipo de Documento
+          %th.text-left Nombre del Archivo
+          %th.text-left Notas
+          %th.text-left
+      %tbody
+
+        - agreement.documents.where.not(id: nil).each do |doc|
+          - if doc.file.attached?
+            %tr
+              %td.py-0= doc.document_type_name
+              %td.py-0= doc.file_name
+              %td.py-0= doc.notes.present? ? doc.notes : ""
+              %td.py-0
+                = link_to rails_blob_path(doc.file, disposition: "inline"), target: "_blank", class: "text-blue-500 hover:text-blue-700 p-1" do
+                  %div.tooltip.tooltip-warning.absolute.tooltip-left{ style: "","data-tip" => "Ver documento", }
+                    %i.fas.fa-external-link-alt
+
+                - if @can_manage_documents
+                  = form_with url: document_path(doc), method: :delete,  confirm: "¿Estás seguro de que deseas eliminar este documento?", data: {turbo: false}, class: "inline" do
+                    = button_tag type: :submit, class: "text-red-500 hover:underline ml-4 tooltip tooltip-warning tooltip-left", "data-tip" => "Eliminar documento" do
+                      %i.fas.fa-trash
+
+                  -#= form_with url: document_path(doc), method: :delete, class: "inline-block", data: { turbo: false } do
+                    %button{ type: "button", class: "text-red-500 hover:text-red-700 p-1", "data-modal-target": "deleteDocumentModal#{doc.id}", title: "Eliminar" }
+                      %i.fas.fa-trash
+
+                    / Modal
+                    %div.modal{ id: "deleteDocumentModal#{doc.id}" }
+                      %div.modal-box
+                        %h3.font-bold.text-lg
+                          ¿Estás seguro de que deseas eliminar este documento?
+                        %p.py-4
+                          Este cambio no se puede deshacer.
+                        %div.modal-action
+                          %button.btn.btn-primary{ type: "submit", title: "Confirmar" }
+                            %i.fas.fa-check
+                        %button.btn.btn-ghost{ type: "button", "data-modal-close": "deleteDocumentModal#{doc.id}", title: "Cancelar" }
+                          %i.fas.fa-times
+
+          - else
+            %tr
+              %td.py-0= doc.document_type_name
+              %td.py-0.text-gray-500 Sin archivo adjunto
+              %td.py-0.text-gray-500 Sin notas
+              %td.py-0.text-gray-500 Sin acciones
+
+        - if @can_manage_documents
+          %tr#document-form
+            = form_with model: @document, url: upload_document_agreement_path(@agreement), local: true, class: "space-y-6", multipart: true, data: { turbo: false } do |f|
+              %td.py-0
+                = f.select :document_type_id, Document::DOCUMENT_TYPES.map { |id, name| [name, id] }, {}, class: "select select-bordered h-4 text-sm px-1 py-1"
+
+              %td.py-1
+                %div#document_dropzone.border-2.border-dashed.border-gray-300.rounded-lg.p-2.flex.flex-col.items-center.justify-center
+                  %p.text-gray-500.text-sm.text-center.mb-2
+                    = "Arrastrar y soltar el archivo aquí. Debe ser PDF, JEPG, JPG o PNG."
+                  = f.file_field :file, class: "hidden", id: "document_input"
+                  -#%button.btn.btn-outline.btn-sm.mt-2{ type: "button", onclick: "document.getElementById('file_input').click()" }
+                    Seleccionar Archivo
+
+              %td.py-0
+                = f.text_area :notes, class: "textarea textarea-bordered w-full", placeholder: "Notas adicionales sobre el documento"
+
+              %td.py-0
+                %button.btn.btn-success.btn-xs.tooltip.tooltip-warning.tooltip-left{ type: "submit", "data-tip" =>  "Agregar documento",
+                    disabled: true, id: "add_document_button" }
+                  %i.fas.fa-plus
+
+        / Mensajes del flash
+        - if flash[:alert_document]
+          %tr
+            %td{colspan: "4"}
+              #alert-document.relative.alert.alert-error.shadow-lg.mt-1.mb-8
+                .flex.items-center
+                  %i.fa.fa-times-circle.text-red-500.text-xl
+                  %span.ml-2= flash[:alert_document]
+                %button.absolute.top-1.right-1.btn.btn-circle.btn-ghost.w-6.h-6.flex.items-center.justify-center{"aria-label" => "Cerrar", onclick: "this.parentElement.remove()"}
+                  %i.fa.fa-times.text-sm

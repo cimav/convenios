@@ -1,0 +1,19 @@
+-#%div.flex.items-center.justify-center.min-h-screen.bg-gray-100
+  %div.bg-white.rounded-lg.shadow-md.p-8.max-w-md.w-full
+    %h2.text-2xl.font-bold.mb-6.text-center.text-gray-700
+      Plataforma de Convenios y Contratos
+    %p.text-center.text-gray-600.mb-4
+      Iniciar sesión con su cuenta del Cimav
+    %div.text-center
+      = link_to 'Iniciar sesión con Google', '/auth/google_oauth2', class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+
+
+%div.flex.items-center.justify-center.bg-gray-100
+  %div.bg-white.rounded-lg.shadow-md.p-8.max-w-md.w-full
+    %h2.text-2xl.font-bold.mb-6.text-center.text-gray-700
+      Plataforma de Convenios y Contratos
+    %p.text-center.text-gray-600.mb-4
+      Iniciar sesión con cuenta del Cimav
+    %div.text-center
+      = link_to 'Iniciar sesión', '/auth/google_oauth2',
+        class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'

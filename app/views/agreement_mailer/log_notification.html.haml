@@ -1,0 +1,16 @@
+%img(src="https://cimav.edu.mx/wp-content/themes/cimav2017/img/logo-top.png" ){:style=>"max-width: 35%;height: auto;"}
+
+%h1 Nuevo Seguimiento en el Convenio ##{@agreement.id}
+
+%p Se ha registrado un nuevo seguimiento:
+
+%p
+  %strong Mensaje:
+  = @agreement_log.message
+  %br/
+  %strong Estado:
+  = @agreement_log.status_human
+
+%p
+  Puede revisar el convenio en el siguiente enlace:
+  %a{ href: agreement_url(@agreement) } Ver

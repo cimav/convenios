@@ -1,0 +1,20 @@
+%div.mx-20.mt-1.mb-8
+  %h1.text-xl.font-bold.mt-4.mb-2 Seguimiento del Convenio
+
+  = turbo_frame_tag "agreement_logs_frame" do
+    %table.table.w-full
+      %thead
+        %tr
+          %th{ class: 'text-left w-[250px]' } Usuario
+          %th{ class: 'text-left' } Mensaje
+          %th{ class: 'text-left w-[150px]' } Status
+      %tbody#agreement_logs_tbody
+        - if @logs.any?
+          - @logs.each do |log|
+            = render partial: "agreement_logs/log", locals: { log: log }
+        - else
+          %tr
+            %td{ colspan: 3, class: 'text-center' } No hay logs para este acuerdo.
+
+  %div.mt-6
+    = render partial: "agreement_logs/form", locals: { agreement: @agreement }

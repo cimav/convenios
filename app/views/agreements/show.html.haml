@@ -1,0 +1,159 @@
+/ .mx-auto
+-#%div.w-full.py-4.px-8
+
+%div.container.mx-auto.p-6.relative
+  -#%h1.text-2xl.font-bold.mb-4.text-gray-700 Datos Convenio
+
+  = render "status_management", agreement: @agreement
+
+
+  %div.flex.justify-between.items-center
+    %h1.text-2xl.font-bold.mb-4.text-gray-700
+      Datos Convenio
+    -# Renderiza el bloque flotante alineado a la derecha del encabezado
+
+  %div.mt-4.mb-10
+    %table.w-full.text-sm{ style: "border-collapse: separate; border-spacing: 0 8px;" }
+      %thead.hidden
+        %tr
+          %th.text-left Etiqueta
+          %th.text-left Campo
+      %tbody
+        %tr.pb-4
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Código:
+          %td
+            %span.badge.badge-ghost.text-lg.font-normal.text-gray-500= @agreement.formatted_code
+        %tr.pb-4
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Título:
+          %td.text-gray-700= @agreement.title
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Tipo:
+          %td.text-gray-700= @agreement.agreement_type.name
+        %tr
+          %td.relative.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            %span Propietario:
+            %div.tooltip.tooltip-warning.absolute{ style: "top: -5px; right: 5px;",
+              "data-tip" => "Es el creador del convenio", }
+              %i.fas.fa-exclamation-circle.text-yellow-500.cursor-pointer
+
+          %td.text-gray-700= @agreement.creator&.nombre
+        %tr
+          %td.font-bold.text-right.text-gray-600{ style: "width: 200px; padding-right: 16px;" } Fechas:
+          %td.text-gray-700
+            %div.flex.justify-between
+              %span
+                %strong.text-sm.text-gray-600 Firma:
+                = @agreement.signature_date.strftime("%d / %b / %Y") if @agreement.signature_date
+              %span
+                %strong.text-sm.text-gray-600 Inicio:
+                = @agreement.start_date.strftime("%d / %b / %Y") if @agreement.start_date
+              %span
+                %strong.text-sm.text-gray-600 Término:
+                = @agreement.end_date.strftime("%d / %b / %Y") if @agreement.end_date
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Nombre del Cliente:
+          %td.text-gray-700= @agreement.client_name
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Dirección del Cliente:
+          %td.text-gray-700= @agreement.client_address
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Tipo de Cliente:
+          %td.text-gray-700= cliente_type_label(@agreement.client_type)
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Testigo:
+          %td.text-gray-700= @agreement.witness_name
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Cargo del Testigo:
+          %td.text-gray-700= @agreement.witness_position
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Objetivo:
+          %td.text-gray-700= @agreement.objective
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Obligaciones:
+          %td.text-gray-700= @agreement.obligations
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Beneficios:
+          %td.text-gray-700= @agreement.benefits
+        %tr
+          %td.font-bold.text-right.text-gray-600{ style: "width: 200px; padding-right: 16px;" } Monto:
+          %td.text-gray-700
+            %div.flex
+              = number_to_currency(@agreement.amount, unit: "$", format: "%u%n MXN", separator: ".", delimiter: ",", precision: 2)
+        %tr
+          %td.font-bold.text-right.text-gray-600{ style: "width: 200px; padding-right: 16px;" } Firmado por:
+          %td.text-gray-700
+            %div.flex.justify-between
+              %span
+                %strong.text-sm.text-gray-600 Cliente:
+                - if @agreement.signed_by_cliente?
+                  %i.fa.fa-check-circle.text-green-500.fa-lg
+                - else
+                  %i.fa.fa-clock.text-yellow-500.fa-lg
+              %span
+                %strong.text-sm.text-gray-600 Solicitante:
+                - if @agreement.signed_by_solicitante?
+                  %i.fa.fa-check-circle.text-green-500.fa-lg
+                - else
+                  %i.fa.fa-clock.text-yellow-500.fa-lg
+              %span
+                %strong.text-sm.text-gray-600 Director:
+                - if @agreement.signed_by_director?
+                  %i.fa.fa-check-circle.text-green-500.fa-lg
+                - else
+                  %i.fa.fa-clock.text-yellow-500.fa-lg
+        %tr
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            Notas:
+          %td.text-gray-700= @agreement.notes
+
+  %div.flex.justify-end.space-x-2.mt-4
+    - if @can_edit_agreement
+      = link_to edit_agreement_path(@agreement), class: "btn btn-circle btn-outline" do
+        %span.tooltip.tooltip-warning.tooltip-left{"data-tip" => "Editar el contenido del convenio", }
+          %i.fas.fa-edit.text-lg
+
+    = link_to agreements_path, class: "btn btn-circle btn-secondary" do
+      %span.tooltip.tooltip-warning.tooltip-left{"data-tip" => "Regresar al listado de convenios", }
+        %i.fas.fa-arrow-left.text-lg
+
+    = link_to agreement_agreement_logs_path(@agreement), class: "btn btn-circle btn-primary" do
+      %span.tooltip.tooltip-warning.tooltip-left{"data-tip" => "Ir al seguimiento de mensajes", }
+        %i.fas.fa-list.text-lg
+
+  %hr.my-1
+  = render "members" , agreement: @agreement
+  %hr.mt-4
+  = render "documents", agreement: @agreement, document: @document
+
+  %div.relative.px-4
+    %div.absolute.left-6.top-0.bottom-0.w-1.bg-gray-300
+    - prev_date = nil
+    - @agreement.agreement_logs.where(by_system: true).order(:created_at).each do |log|
+      %div.flex.items-start.space-x-4.mb-6
+        %div.flex.flex-col.items-center
+          %div.w-8.h-8.flex.items-center.justify-center.rounded-full{ class: Agreement.status_info(log.status)[:color] }
+            %i.text-white{ class: Agreement.status_info(log.status)[:icon] }
+          %div.h-full.w-1.bg-gray-300.flex-grow
+        %div
+          - if prev_date
+            - days_difference = (log.created_at.to_date - prev_date.to_date).to_i
+            %p.text-sm.text-gray-400.mt-1
+              Hace #{days_difference} #{'día'.pluralize(days_difference)}
+          %p.text-sm.text-gray-500.mb-1= log.created_at.strftime("%d/%b/%Y %H:%M")
+          %h3.text-lg.font-bold{ class: Agreement.status_info(log.status)[:color] }
+            = Agreement.status_info(log.status)[:human]
+          %p.text-sm.text-gray-700
+            Registrado por:
+            %span.font-semibold= log.owner&.short_name || "Sistema"
+      - prev_date = log.created_at

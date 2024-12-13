@@ -1,0 +1,22 @@
+-# app/views/dashboard/show.html.haml
+
+%div.mt-24.px-4
+  %h2.text-2xl.font-semibold.text-gray-800.mt-4= @user.nombre
+  %p.text-gray-600.mt-2
+    %strong Clave:
+    = @user.clave
+  %p.text-gray-600.mt-2
+    %strong Status:
+    = @user.status
+  %p.text-gray-600.mt-2
+    %strong CURP:
+    = @user.curp
+  %p.text-gray-600.mt-2
+    %strong Email:
+    = @user.email
+  %p.text-gray-600.mt-2
+    %strong Role:
+    = @user.role
+
+  %div.mt-6
+    = link_to "Back", dashboard_path(anchor: "dashboard-table"), data: { turbo: true }, class: "text-blue-500 hover:underline"

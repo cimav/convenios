@@ -1,0 +1,12 @@
+%tr
+  %td{ class: 'w-[250px] flex items-center space-x-4 py-1' }
+    %img{ class: "#{log.by_system ? 'mask mask-hexagon' : 'rounded-full'} w-12 h-12", src: log.owner.avatar_url, alt: "Avatar de #{log.owner.short_name}" }
+    %div
+      %p{ class: 'font-bold' }= log.owner.short_name
+      %p{ class: 'text-xs text-gray-500' }= log.created_at.localtime.strftime("%d/%b/%Y %H:%M")
+  %td{ class: 'w-auto' }
+    %p= log.message
+  %td{ class: 'w-[150px]' }
+    %span.flex.items-center.space-x-2{ class: Agreement.status_info(log.status)[:color] }
+      %i.pr-1{ class: Agreement.status_info(log.status)[:icon] }
+      = Agreement.status_info(log.status)[:human] || "N/A"

@@ -1,0 +1,10 @@
+%h1 hola
+- if logs.any?
+  - prev_log = nil
+  - logs.each do |log|
+    - days_diff = prev_log ? (log.created_at.to_date - prev_log.created_at.to_date).to_i : nil
+    = render partial: "agreement_logs/log", locals: { log: log, days_diff: days_diff }
+    - prev_log = log
+- else
+  %tr
+    %td{ colspan: 4, class: 'text-center' } No hay logs para este acuerdo.

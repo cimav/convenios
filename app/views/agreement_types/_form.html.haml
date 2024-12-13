@@ -1,0 +1,30 @@
+= form_with(model: @agreement_type, local: true) do |form|
+  - if @agreement_type.errors.any?
+    #error_explanation
+      %h2= pluralize(@agreement_type.errors.count, "error") + " prohibited this agreement type from being saved:"
+      %ul
+        - @agreement_type.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = form.label "Nombre"
+    = form.text_field :name
+
+  .field
+    = form.label "Descripción"
+    = form.text_area :description
+
+  .field
+    = form.label "Documentos Requeridos"
+    = form.text_area :required_documents
+
+  .field
+    = form.label "Requiere Responsable Técnico"
+    = form.check_box :requires_technical_responsible
+
+  .field
+    = form.label "Incluye Términos Financieros"
+    = form.check_box :has_financial_terms
+
+  .actions
+    = form.submit

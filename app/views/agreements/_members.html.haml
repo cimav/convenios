@@ -1,0 +1,97 @@
+%h4.text-xl.mb-4.text-gray-700 Participantes
+
+%table.table.w-full
+  %thead
+    %tr
+      %th Nombre
+      %th.relative
+        %div
+          Perfil
+          %div.tooltip.tooltip-warning.absolute{ style: "top: -5px; left: -5px;",
+                "data-tip" => "Rol del participante", }
+            %i.fas.fa-exclamation-circle.text-yellow-500.cursor-pointer
+
+      %th Nota
+      %th
+  %tbody{id: "members_tbody"}
+    %tr
+      %td{ class: "px-1 py-1" }
+        = agreement.creator.nombre
+      %td{ class: "px-1 py-1" }
+        Propietario
+      %td{ class: "text-xs px-1 py-1" }
+
+    - agreement.members.where.not(id: nil).each do |member|
+      %tr{id: "member_#{member.id}"}
+        %td.p-0= member.user.nombre
+        %td.p-0= member.profile_human
+        %td.p-0= member.notes
+        %td.p-0
+          - if @can_manage_technicals
+            = form_with url: agreement_member_path(agreement, member), method: :delete, class: "inline-block", data: { turbo: false } do
+              %button.tooltip.tooltip-warning.tooltip-left{ type: "button", class: "text-red-500 hover:text-red-700 p-1",
+                    "data-modal-target": "deleteModal#{member.id}", "data-tip" => "Eliminar participante" }
+                %i.fas.fa-trash
+
+              / Modal
+              %div.modal{ id: "deleteModal#{member.id}" }
+                %div.modal-box
+                  %h3.font-bold.text-lg
+                    ¿Estás seguro de que deseas eliminar este participante?
+                  %p.py-4
+                    Este cambio no se puede deshacer.
+                  %div.modal-action.flex.justify-end.space-x-2
+                    %button.btn.btn-circle.btn-primary{ type: "submit", title: "Confirmar" }
+                      %i.fas.fa-check.text-lg
+                    %button.btn.btn-circle.btn-ghost{ type: "button", "data-modal-close": "deleteModal#{member.id}", title: "Cancelar" }
+                      %i.fas.fa-times.text-lg
+
+    - if @can_manage_technicals
+      %tr#member-form
+        - disable_requester = agreement.members.where(profile: "requester").exists?
+        - new_member ||= agreement.members.new
+        = form_with model: [agreement, new_member], url: agreement_members_path(agreement),  local: true,  method: :post, multipart: true, data: { turbo: false } do |f_tr|
+          %td{ class: "text-xs px-1 py-1" }
+            = f_tr.collection_select :user_id, User.members, :id, :nombre,
+                                    {prompt: "Seleccione participante"},
+                                    {class: "select select-bordered text-ms h-4 text-sm px-1 py-1", id: :select_member_id,
+                                      onchange: "toggleAddMemberButton()", disabled: disable_requester && new_member.profile == "requester"}
+
+          %td{ class: "text-xs px-1 py-1" }
+            = f_tr.collection_select :profile, Member.profiles.map { |key, _| [Member.new(profile: key).profile_human, key] },
+                           :last, :first,
+                           {prompt: "Seleccione perfil"},
+                           {class: "select select-bordered text-ms w-40 h-4 text-sm px-1 py-1 ", id: :select_profile_id , onchange: "toggleAddMemberButton()"}
+
+          %td.px-1.py-0
+            = f_tr.text_field :notes, class: "textarea textarea-bordered w-full", placeholder: "Notas adicionales sobre el participante",
+              maxlength: "200"
+          %td.py-1.py-0
+            %button.btn.btn-success.btn-xs.tooltip.tooltip-warning.tooltip-left{ type: "submit", "data-tip" => "Agregar participante" ,
+              disabled: true, id: "add_member_button"}
+              %i.fas.fa-plus
+
+    / Mensajes del flash
+    - if flash[:alert_member]
+      %tr
+        %td{colspan: "3"}
+          #alert-member.relative.alert.alert-error.shadow-lg.mt-1.mb-2
+            .flex.items-center
+              %i.fa.fa-times-circle.text-red-500.text-xl
+              %span.ml-2= flash[:alert_member]
+            %button.absolute.top-1.right-1.btn.btn-circle.btn-ghost.w-6.h-6.flex.items-center.justify-center{"aria-label" => "Cerrar", onclick: "this.parentElement.remove()"}
+              %i.fa.fa-times.text-sm
+
+:javascript
+
+  function toggleAddMemberButton() {
+    const addButton = document.getElementById("add_member_button");
+    const selectProfile = document.getElementById("select_profile_id");
+    const selectMember = document.getElementById("select_member_id");
+    if (selectProfile && selectMember && addButton) {
+      addButton.disabled = selectProfile.value === "" || selectMember.value === "" ;
+    }
+  }
+
+
+

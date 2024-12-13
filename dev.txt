@@ -1,0 +1,37 @@
+
+rails tailwindcss:install
+rails hotwire:install
+bin/rails importmap:install
+
+    Rails 7 + importmap + Hotwire + Stimulus + turbo-rails + tailwindcss-rails + DaisyUI + mysql + oauth2
+
+npm i -D daisyui@latest
+
+https://www.hotrails.dev/turbo-rails
+
+https://tailwindcss.com/docs/guides/ruby-on-rails
+rails new my-project --css tailwind
+
+rails active_storage:install
+rails db:migrate
+
+FERMI_DATABASE_PASSWORD=azul0735 GOOGLE_CLIENT_ID=411158167495-8jebjvhmp8rcvss7u2pav54ns9ivls8u.apps.googleusercontent.com GOOGLE_CLIENT_SECRET=UkKa3LHhOlNdAIh16unu8CUh NETMULTIX_PASSWORD=afrika NETMULTIX_USER=almacen RAILS_ENV=development
+
+FERMI_DATABASE_PASSWORD=azul0735 GOOGLE_CLIENT_ID=411158167495-8jebjvhmp8rcvss7u2pav54ns9ivls8u.apps.googleusercontent.com GOOGLE_CLIENT_SECRET=UkKa3LHhOlNdAIh16unu8CUh NETMULTIX_PASSWORD=afrika NETMULTIX_USER=almacen
+
+brew install yarn
+yarn add choices.js
+
+de vez en cuando requiere el:
+rails assets:precompile
+
+se debe ejecutar solo una vez en el ambiente de desarrollo
+para que cada Gemfile.lock se adapte a diferentes plataformas
+bundle lock --add-platform ruby --add-platform x86_64-linux --add-platform x86_64-linux-gnu --add-platform arm64-darwin24
+ ruby -e "puts RUBY_PLATFORM"
+ identifica la plataform
+ para macos: arm64-darwin24
+ para debian: x86_64-linux-gnu
+
+bundle platform
+muestra las plataformas disponibles para mi proyecto

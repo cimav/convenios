@@ -1,0 +1,121 @@
+= form_with model: @agreement, local: true, class: "space-y-6", data: { turbo: false } do |f|
+  %div.form-control
+    = f.label :title, "Título", class: "label"
+    = f.text_field :title, class: "input input-bordered w-full", maxlength: 200, placeholder: "Título del Convenio"
+
+  %div.flex.space-x-4
+    %div.form-control{class: "w-1/2"}
+      = f.label :agreement_type_id, "Tipo de Convenio", class: "label"
+      = f.collection_select :agreement_type_id, AgreementType.all, :id, :name,
+                            { prompt: "Seleccione un tipo de convenio" },
+                            { class: "select select-bordered w-full" }
+
+    -#%div.flex-1.form-control
+      = f.label :solicitante_id, "Solicitante", class: "label"
+      = f.collection_select :solicitante_id, User.members, :id, :nombre,
+                            { prompt: "Seleccione un solicitante" },
+                            { class: "select select-bordered w-full" }
+
+  %div.form-control
+    = f.label :client_name, "Nombre del Cliente", class: "label"
+    = f.text_field :client_name, class: "input input-bordered w-full", maxlength: 200
+
+  %div.form-control
+    = f.label :client_address, "Dirección del Cliente", class: "label"
+    = f.text_field :client_address, class: "input input-bordered w-full", maxlength: 200
+
+  %div.form-control
+    %label.label
+      %span.label-text Tipo de Cliente
+    %div.flex.space-x-4
+      %label.flex.items-center.space-x-2
+        = f.radio_button :client_type, 'persona_moral', class: "radio"
+        %span Persona moral
+
+      %label.flex.items-center.space-x-2
+        = f.radio_button :client_type, 'persona_fisica', class: "radio"
+        %span Persona física
+
+  %div.form-control
+    = f.label :witness_name, "Nombre del Testigo", class: "label"
+    = f.text_field :witness_name, class: "input input-bordered w-full", maxlength: 200
+
+  %div.form-control
+    = f.label :witness_position, "Cargo del Testigo", class: "label"
+    = f.text_field :witness_position, class: "input input-bordered w-full", maxlength: 200
+
+  %div.form-control
+    = f.label :objective, "Objetivo", class: "label"
+    = f.text_area :objective, class: "textarea textarea-bordered w-full"
+
+  %div.form-control
+    = f.label :obligations, "Obligaciones", class: "label"
+    = f.text_area :obligations, class: "textarea textarea-bordered w-full"
+
+  %div.form-control
+    = f.label :benefits, "Beneficios", class: "label"
+    = f.text_area :benefits, class: "textarea textarea-bordered w-full"
+
+  %div.flex.space-x-4
+    %div.form-control{class: 'w-1/3'}
+      = f.label :signature_date, "Fecha de Firma", class: "label"
+      = f.date_field :signature_date, class: "input input-bordered w-full"
+
+    %div.form-control{class: 'w-1/3'}
+      = f.label :start_date, "Fecha de Inicio", class: "label"
+      = f.date_field :start_date, class: "input input-bordered w-full"
+
+    %div.form-control{class: 'w-1/3'}
+      = f.label :end_date, "Fecha de Término", class: "label"
+      = f.date_field :end_date, class: "input input-bordered w-full"
+
+  %div.flex.justify-end
+    %div.form-control{ style: "max-width: 200px;" }
+      = f.label :amount, "Monto", class: "label text-right"
+      = f.number_field :amount, step: "0.01", min: "0", class: "input input-bordered text-right w-full", placeholder: "0.00"
+
+  %div.flex.space-x-4
+    %div.form-control.block{ style: "margin-right: 2rem !important;" }
+      = f.check_box :signed_by_cliente, class: "checkbox"
+      = f.label :signed_by_cliente, "Firmado por Cliente", class: "ml-2"
+
+    %div.form-control.block{ style: "margin-right: 2rem !important;" }
+      = f.check_box :signed_by_solicitante, class: "checkbox"
+      = f.label :signed_by_solicitante, "Firmado por Solicitante", class: "ml-2"
+
+    %div.form-control.block
+      = f.check_box :signed_by_director, class: "checkbox"
+      = f.label :signed_by_director, "Firmado por Director", class: "ml-2"
+
+  %div.form-control
+    = f.label :notes, "Notas", class: "label"
+    = f.text_area :notes, class: "textarea textarea-bordered w-full"
+
+  / Mensajes flash debajo del formulario
+  - if flash[:alert]
+    .my-4
+      #alert-agreement.alert.alert-error.shadow-lg
+        %ul.list-disc.pl-6
+          - flash[:alert].each do |msg|
+            %li= msg
+
+  %div.flex.justify-end.space-x-2.mt-4
+    %button.btn.btn-circle.btn-primary{type: "submit",
+      title: "Guardar cambios",
+      "aria-label" => "Guardar cambios"
+    }
+      %i.fas.fa-check.text-xl
+
+    = link_to @agreement,
+      class: "btn btn-circle btn-outline",
+      title: "Cancelar cambios",
+      "aria-label" => "Cancelar cambios" do
+      %i.fas.fa-times.text-xl
+
+:javascript
+  document.addEventListener("DOMContentLoaded", () => {
+    const errorsDiv = document.getElementById("alert-agreement");
+    if (errorsDiv) {
+      errorsDiv.scrollIntoView({ behavior: "smooth" });
+    }
+  });

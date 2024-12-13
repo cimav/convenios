@@ -1,0 +1,17 @@
+-#
+  - if @log.errors.any?
+    = turbo_stream.replace "form_errors" do
+      = render partial: "shared/form_errors", locals: { resource: @log }
+  - else
+    = turbo_stream.append "agreement_logs", partial: "agreement_logs/log", locals: { log: @log }
+    = turbo_stream.replace "form_errors" do
+      ""
+    = turbo_stream.replace "new_agreement_log" do
+      = render partial: "agreement_logs/form", locals: { agreement: @agreement }
+
+
+= turbo_stream.prepend "agreement_logs_tbody" do
+  = render partial: "agreement_logs/log", locals: { log: @log }
+
+= turbo_stream.replace "new_agreement_log" do
+  = render partial: "agreement_logs/form", locals: { agreement: @agreement }

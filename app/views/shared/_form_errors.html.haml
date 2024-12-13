@@ -1,0 +1,5 @@
+- if resource.errors.any?
+  .alert.alert-error.mt-2
+    %ul.list-disc.pl-6
+      - resource.errors.full_messages.each do |message|
+        %li= message

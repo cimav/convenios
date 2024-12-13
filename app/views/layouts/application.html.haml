@@ -1,0 +1,78 @@
+!!!
+%html
+  %head
+    %title Convenios
+    = csrf_meta_tags
+    = csp_meta_tag
+    /= stylesheet_link_tag "application", "data-turbo-track": "reload"
+    %link{ href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css", rel: "stylesheet" }
+
+    %script{ src: "https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" }
+    %link{ rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" }
+
+    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
+    = javascript_importmap_tags # Esto carga el archivo application.js en todas las vistas
+
+    %meta{ name: "turbo-visit-control", content: "reload" }
+    / Limpia el Estado del DOM al Cargar el Formulario con Turbo
+    / Turbo reusa partes del DOM cuando navegas dentro de la misma página. Puedes forzar una recarga completa de la página
+    / o limpiar estados inconsistentes al cargar el formulario con Turbo.
+    / Esto obliga a Turbo a recargar completamente la página en lugar de reutilizar elementos del DOM.
+
+    %style
+      html { overflow-y: scroll; /* Asegura que el espacio del scrollbar siempre esté reservado */ }
+
+%body.flex.flex-col.min-h-screen
+
+  - link_menu_classes = "btn btn-ghost btn-sm text-gray-600"
+
+  %header.py-2.px-6.border-b-2.border-gray-400
+    %div.flex.justify-between.items-center
+      %div.w-full
+        %div.flex.w-full.justify-between
+          %img.h-12.w-18.m-1{src: asset_path("logo-cimav.png"), alt: "Cimav"}
+          %div.flex.flex-col.items-center.w-full
+            %h1.text-4xl.font-semibold.text-gray-600 Convenios & Contratos
+            %p.text-sm.uppercase.text-gray-500{ style: "letter-spacing: 0.4em;" } Gestión y Seguimiento
+          -#%div.flex.flex-col.items-end
+            %label.btn.btn-ghost.btn-circle.avatar.cursor-pointer
+              %img.h-10.w-10.rounded-full{"src" => current_user.avatar_url, "alt" => "Avatar del Usuario", "loading" => "lazy"}
+
+          %div.relative.flex.flex-col.items-end.group
+            %label.btn.btn-ghost.btn-circle.avatar.cursor-pointer
+              %img.h-10.w-10.rounded-full{"src" => current_user.avatar_url, "alt" => "Avatar del Usuario", "loading" => "lazy"}
+
+            %ul.absolute.right-0.mt-2.hidden.group-hover:block.bg-base-100.shadow-lg.rounded-lg.z-50
+              %li
+                = link_to "Salir", logout_path, method: :delete, class: "text-red-500", data: { turbo_method: :delete }
+
+
+        -if false
+          %div.flex.space-x-2.justify-between
+            %div.flex.space-x-2
+              //!current_user.belongs_to_role? :solicitante
+              - if false
+                %a.my-1{class: link_menu_classes, "href" => agreements_path, data: { turbo: true }} Convenios
+                %a.my-1{class: link_menu_classes, "href" => agreement_types_path, data: { turbo_frame: "content" }} Tipos
+            %div.flex.flex-col.items-end
+              %a.my-1.btn.btn-ghost.btn-sm.text-gray-600{"href" => logout_path, data: { turbo_method: :delete }} Salir
+
+  / .border-b-2.border-gray-400
+  %nav.px-4.pb-0.border-b-2.border-gray-400
+    %ol.breadcrumbs.flex.space-x-2
+      - breadcrumbs.each_with_index do |breadcrumb, index|
+        - if breadcrumb.path
+          %li
+            = link_to truncate(breadcrumb.name, length: 120, omission: '...'), breadcrumb.path, class: "!text-gray-700 hover:text-gray-700"
+        - else
+          %li
+            = truncate(breadcrumb.name, length: 120, omission: '...')
+        - unless index == breadcrumbs.size - 1
+          %span.mx-1.text-gray-700
+            %i.fas.fa-arrow-right
+
+  %main.flex-grow.overflow-hidden.px-1.py-1
+    = yield
+
+  %footer.bg-base-200.text-center.py-2.text-sm
+    © 2024 Centro de Investigación en Materiales Avanzados

@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-200;
+  }
+}
+
+*/
+
+.custom-borders {
+    @apply border-2 border-green-500 border-dotted cursor-pointer;
+}
+
+.breadcrumbs {
+    @apply flex space-x-2 text-gray-600;
+}
+
+.breadcrumbs li {
+    @apply inline-block;
+}
+
+.breadcrumbs li a {
+    @apply text-blue-500 hover:underline;
+}
+
+textarea {
+    line-height: 1.25 !important;
+}
+
+.table-of-agreements :where(th, td) {
+    padding: .45rem;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 100%;
+    }
+}
+
+#login-body {
+    /* Imagen de fondo */
+    /* background-image: url('/assets/sequoia-background.jpg'); */
+    background-image: url('/assets/cimav-mty.jpg');
+    background-size: cover; /* Asegura que la imagen cubra todo */
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Fija el fondo mientras se mueve */
+    animation: moveBackground 30s linear infinite; /* Animación continua */
+}
