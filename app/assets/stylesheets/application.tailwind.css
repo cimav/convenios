@@ -55,5 +55,5 @@ textarea {
     background-size: cover; /* Asegura que la imagen cubra todo */
     background-repeat: no-repeat;
     background-attachment: fixed; /* Fija el fondo mientras se mueve */
-    animation: moveBackground 30s linear infinite; /* Animación continua */
+    animation: moveBackground 300s linear infinite; /* Animación continua */
 }

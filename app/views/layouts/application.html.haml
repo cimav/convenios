@@ -55,7 +55,7 @@
                 %a.my-1{class: link_menu_classes, "href" => agreements_path, data: { turbo: true }} Convenios
                 %a.my-1{class: link_menu_classes, "href" => agreement_types_path, data: { turbo_frame: "content" }} Tipos
             %div.flex.flex-col.items-end
-              %a.my-1.btn.btn-ghost.btn-sm.text-gray-600{"href" => logout_path, data: { turbo_method: :delete }} Salir
+              %a.my-1.btn.btn-ghost.btn-sm.text-gray-600{"href" => logout_path, method: :delete, data: { turbo_method: :delete }} Exit
 
   / .border-b-2.border-gray-400
   %nav.px-4.pb-0.border-b-2.border-gray-400
