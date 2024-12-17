@@ -26,8 +26,12 @@ Rails.application.configure do
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
 
+
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RAILS_ENV'] == 'production'
+
   # Do not fall back to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
+  config.assets.digest = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
@@ -66,6 +70,11 @@ Rails.application.configure do
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = :info # Puede ser :debug, :info, :warn, :error, :fatal
+  config.logger = ActiveSupport::Logger.new("log/production.log")
+  config.log_tags = [ :request_id ]
+  config.cache_store = :memory_store
+
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
