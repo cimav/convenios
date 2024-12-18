@@ -45,7 +45,8 @@ Rails.application.routes.draw do
   #get '/logout' => 'sessions#destroy'
 
   get '/login', to: 'sessions#new', as: :login
-  delete '/logout', to: 'sessions#destroy', as: :logout
+  #delete '/logout', to: 'sessions#destroy', as: :logout
+  get '/logout', to: 'sessions#destroy', as: :logout
 
   get '/dashboard', to: 'dashboard#index', as: :dashboard
   get 'dashboard/:id', to: 'dashboard#show', as: :dashboard_show

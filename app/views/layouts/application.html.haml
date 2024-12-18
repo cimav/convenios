@@ -44,7 +44,8 @@
 
             %ul.absolute.right-0.mt-2.hidden.group-hover:block.bg-base-100.shadow-lg.rounded-lg.z-50
               %li
-                = link_to "Salir", logout_path, method: :delete, class: "text-red-500", data: { turbo_method: :delete }
+                = link_to "Salir_", logout_path, class: "text-red-500"
+                / , method: :delete, data: { turbo_method: :delete }
 
 
         -if false
