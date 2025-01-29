@@ -54,19 +54,19 @@ export default class extends Controller {
             // Resaltar términos si hay coincidencias
             if (matches) {
                 this.highlightMatches(titleEle, terms);
-                //   this.highlightMatches(clientEle, terms);
+                this.highlightMatches(clientEle, terms);
                 // this.highlightMatches(creatorEle, terms);
                 // this.highlightMatches(acronymEle, terms);
-                   this.highlightMatches(statusEle, terms);
-                //   this.highlightMatches(codeEle, terms);
+                this.highlightMatches(statusEle, terms);
+                this.highlightMatches(codeEle, terms);
             } else {
                 // Limpiar resaltado si no hay coincidencias
                 this.clearHighlights(titleEle);
-                //    this.clearHighlights(clientEle);
+                this.clearHighlights(clientEle);
                 // this.clearHighlights(creatorEle);
                 // this.clearHighlights(acronymEle);
                 this.clearHighlights(statusEle);
-                //    this.clearHighlights(codeEle);
+                this.clearHighlights(codeEle);
             }
 
 
