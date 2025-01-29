@@ -95,6 +95,16 @@ class AgreementsController < ApplicationController
     @agreement.creator_id = current_user.id
 
     if @agreement.save
+
+      # Registro del cambio en AgreementLog
+      AgreementLog.create!(
+        agreement: @agreement,
+        status: :pendiente,
+        owner_id: current_user.id,
+        message: "Se creó el convenio/contrato",
+        by_system: true
+      )
+
       flash[:notice] = "El acuerdo se creó correctamente."
       redirect_to agreement_path(@agreement) # Redirige a la vista de detalle del acuerdo
     else

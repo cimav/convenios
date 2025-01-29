@@ -20,14 +20,17 @@
           %th.text-left Campo
       %tbody
         %tr.pb-4
-          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+          %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px; " }
             Código:
           %td
-            %span.badge.badge-ghost.text-lg.font-normal.text-gray-500= @agreement.formatted_code
+            %span.badge.badge-ghost.text-lg.font-normal.text-gray-500.border.border-gray-300
+              = @agreement.formatted_code
         %tr.pb-4
           %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
             Título:
-          %td.text-gray-700= @agreement.title
+          %td.text-gray-700
+            %p{style: "width:70%;"}
+              = @agreement.title
         %tr
           %td.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
             Tipo:
