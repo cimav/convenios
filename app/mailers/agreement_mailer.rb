@@ -16,7 +16,8 @@ class AgreementMailer < ApplicationMailer
     @agreement_log = agreement_log
 
     # Lista de destinatarios: creador, miembros y juridico
-    juridico_ids = RoleUser::ROLES[:juridico].map { |id| format('%05d', id) }
+    # juridico_ids = RoleUser::ROLES[:juridico].map { |id| format('%05d', id) }
+    juridico_ids = Role.where(role: :juridico).pluck(:user_id).map { |id| format('%05d', id) }
     juridico_emails = User.where(clave: juridico_ids).pluck(:email)
     recipients = (@agreement.members.map { |member| member.user.email } + [@agreement.creator.email] + juridico_emails).uniq
 

@@ -52,6 +52,7 @@ textarea {
     /* Imagen de fondo */
     /* background-image: url('/assets/sequoia-background.jpg'); */
     background-image: url('/assets/cimav-mty.jpg');
+    /* background-image: url('<%= asset_path("cimav-mty.jpg") %>'); */
     background-size: cover; /* Asegura que la imagen cubra todo */
     background-repeat: no-repeat;
     background-attachment: fixed; /* Fija el fondo mientras se mueve */
