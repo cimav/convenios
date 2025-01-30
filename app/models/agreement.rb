@@ -3,7 +3,7 @@ class Agreement < ApplicationRecord
   include Statusable
 
   before_update :log_status_change, if: :will_save_change_to_status?
-  after_create :set_initial_code
+  after_create :set_initial_code, :send_notification
   before_update :set_code_on_approved
 
   # Método personalizado para cargar el creator
@@ -180,6 +180,17 @@ class Agreement < ApplicationRecord
     if start_date.present? && end_date.present? && start_date >= end_date
       errors.add(:start_date, "debe ser anterior a la fecha de término")
     end
+  end
+
+  def send_notification
+    # Registro del cambio en AgreementLog
+    AgreementLog.create!(
+      agreement: self,
+      status: :pendiente,
+      owner_id: self.creator_id,
+      message: "Se creó el convenio/contrato",
+      by_system: true
+    )
   end
 
 
