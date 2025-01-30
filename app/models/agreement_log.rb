@@ -27,7 +27,9 @@ class AgreementLog < ApplicationRecord
   private
 
   def send_notification
-    AgreementMailer.log_notification(agreement, self).deliver_later
+    if self.persisted? && !self.message&.start_with?("Se crea convenio")
+      AgreementMailer.log_notification(agreement, self).deliver_later
+    end
   end
 
 end

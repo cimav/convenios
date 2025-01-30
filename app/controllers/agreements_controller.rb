@@ -11,8 +11,6 @@ class AgreementsController < ApplicationController
 
     @agreements = Agreement.for_table(current_user)
 
-    puts @agreements.length
-
     # Realiza una sola consulta a la base de datos externa para obtener los solicitantes
     # Esta consulta evita el problema del N+1
     creator_ids = @agreements.map(&:creator_id).compact # sin nils
@@ -95,6 +93,15 @@ class AgreementsController < ApplicationController
     @agreement.creator_id = current_user.id
 
     if @agreement.save
+
+      AgreementLog.create(
+        agreement: @agreement,
+        status: :pendiente,
+        owner_id: current_user.id,
+        message: "Se crea convenio/contrato",
+        by_system: true
+      )
+
       flash[:notice] = "El acuerdo se creó correctamente."
       redirect_to agreement_path(@agreement) # Redirige a la vista de detalle del acuerdo
     else
