@@ -4,7 +4,7 @@ class AgreementLog < ApplicationRecord
 
   include Statusable
 
-  after_create :send_notification
+  after_commit :send_notification, on: :create
 
   def owner
     # Formatea el solicitante_id a 5 dígitos y busca el User correspondiente
@@ -27,7 +27,7 @@ class AgreementLog < ApplicationRecord
   private
 
   def send_notification
-    if self.persisted? && !self.message&.start_with?("Se crea convenio")
+    if self.exist? && !self.message&.start_with?("Se crea convenio")
       AgreementMailer.log_notification(agreement, self).deliver_later
     end
   end
