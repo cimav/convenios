@@ -27,7 +27,7 @@ class AgreementMailer < ApplicationMailer
 
     mail(
       to: recipients,
-      subject: "Nuevo seguimiento en el acuerdo ##{@agreement.id}"
+      subject: "Nuevo seguimiento en el convenio/contrato ##{@agreement.id}"
     )
   end
 
