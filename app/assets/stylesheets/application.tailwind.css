@@ -48,7 +48,7 @@ textarea {
     }
 }
 
-#login-body {
+#DEPRECATED_login-body {
     /* Imagen de fondo */
     /* background-image: url('/assets/sequoia-background.jpg'); */
     background-image: url('/assets/cimav-mty.jpg');

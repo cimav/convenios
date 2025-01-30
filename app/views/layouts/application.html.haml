@@ -4,14 +4,15 @@
     %title Convenios
     = csrf_meta_tags
     = csp_meta_tag
+
+    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
+    = javascript_importmap_tags # Esto carga el archivo application.js en todas las vistas
+
     /= stylesheet_link_tag "application", "data-turbo-track": "reload"
     %link{ href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css", rel: "stylesheet" }
 
     %script{ src: "https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" }
     %link{ rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" }
-
-    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
-    = javascript_importmap_tags # Esto carga el archivo application.js en todas las vistas
 
     %meta{ name: "turbo-visit-control", content: "reload" }
     / Limpia el Estado del DOM al Cargar el Formulario con Turbo
@@ -21,6 +22,8 @@
 
     %style
       html { overflow-y: scroll; /* Asegura que el espacio del scrollbar siempre esté reservado */ }
+
+    = favicon_link_tag 'favicon.ico'
 
 %body.flex.flex-col.min-h-screen
 
@@ -32,8 +35,11 @@
         %div.flex.w-full.justify-between
           %img.h-12.w-18.m-1{src: asset_path("logo-cimav.png"), alt: "Cimav"}
           %div.flex.flex-col.items-center.w-full
-            %h1.text-4xl.font-semibold.text-gray-600 Convenios & Contratos
+            %h1.text-4xl.font-semibold.text-gray-600
+              %i.fa-solid.fa-file-signature
+              Convenios & Contratos
             %p.text-sm.uppercase.text-gray-500{ style: "letter-spacing: 0.4em;" } Gestión y Seguimiento
+
           -#%div.flex.flex-col.items-end
             %label.btn.btn-ghost.btn-circle.avatar.cursor-pointer
               %img.h-10.w-10.rounded-full{"src" => current_user.avatar_url, "alt" => "Avatar del Usuario", "loading" => "lazy"}

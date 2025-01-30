@@ -28,9 +28,11 @@ development:
 
 production:
   <<: *default
+  host: fermi.cimav.edu.mx
   database: convenios_production
-  username: convenios
-  password: <%= ENV["CONVENIOS_DATABASE_PASSWORD"] %>
+  username: admin
+  password: <%= ENV["FERMI_DATABASE_PASSWORD"] %>
+  socket: /tmp/mysql.sock
 
 oracle_netmultix:
   # Version 10.2.0.1.0

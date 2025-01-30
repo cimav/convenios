@@ -8,5 +8,5 @@
     = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
     = javascript_importmap_tags
     / { style: "background-image: url(#{image_path('cimav-mty.jpg')}); background-size: cover; background-position: center;" }
-  %body#login-body.bg-gray-100.flex.items-center.justify-center.h-screen
+  %body#login-body.bg-gray-100.flex.items-center.justify-center.h-screen{style: "background-image: url(#{image_path('cimav-mty.jpg')}); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; animation: moveBackground 300s linear infinite;" }
     = yield

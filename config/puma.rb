@@ -31,4 +31,6 @@ plugin :tmp_restart
 
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.
 # In other environments, only set the PID file if requested.
-pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+# pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+# pidfile File.expand_path("tmp/puma.pid", __dir__)
+pidfile "#{Dir.pwd}/tmp/puma.pid"
