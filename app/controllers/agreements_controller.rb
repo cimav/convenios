@@ -119,11 +119,14 @@ class AgreementsController < ApplicationController
 
   def update
     if @agreement.update(agreement_params)
-      flash[:notice] = "El acuerdo se guardó correctamente."
-      redirect_to @agreement, notice: 'El convenio fue actualizado exitosamente.'
+      flash[:notice] = "Los cambios se guardaron correctamente."
+      redirect_to @agreement
+      # render :edit
+      #redirect_to edit_agreement_path(@agreement, anchor: "btn-save-agreement"), notice:  "Los cambios se guardaron correctamente."
     else
       flash[:alert] = @agreement.errors.full_messages #.to_sentence
       render :edit
+      # redirect_to edit_agreement_path(@agreement, anchor: "btn-save-agreement")
     end
   end
 
