@@ -47,7 +47,7 @@ class Agreement < ApplicationRecord
       'agreements.status',
       'agreement_types.acronym AS type_acronym',
       'agreement_types.name AS type_name'
-    ).joins(:agreement_type).order(id: :desc)
+    ).joins(:agreement_type) # no funciona aqui el order .order('agreements.id': :desc)
 
     if user.dev?
       # juridico puede verlos todos; excepto en edicion #, statuses[:aprobado]
