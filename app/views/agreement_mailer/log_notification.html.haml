@@ -5,6 +5,8 @@
 %p Se ha registrado un nuevo seguimiento:
 
 %p
+  %strong Usuario:
+  = @agreement_log.owner.short_name
   %strong Mensaje:
   = @agreement_log.message
   %br/

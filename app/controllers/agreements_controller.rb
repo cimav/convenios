@@ -3,7 +3,7 @@ class AgreementsController < ApplicationController
   # Agregar breadcrumbs para las rutas principales
   add_breadcrumb "Convenios", :agreements
 
-  before_action :set_agreement, only: [:show, :edit, :update, :validate, :return_for_review, :upload_document, :change_status]
+  before_action :set_agreement, only: [:show, :edit, :update, :validate, :return_for_review, :upload_document, :update_status]
   before_action :authenticate_user!
   before_action :set_breadcrumbs_for_edition, only: [:edit, :update]
   before_action :set_users_cyt_actives, only: [:new, :edit, :show]
@@ -149,7 +149,7 @@ class AgreementsController < ApplicationController
   end
 
   # Acción para cambiar el estado del acuerdo
-  def change_status
+  def update_status
 
     new_status = params[:new_status]
 

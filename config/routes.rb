@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     resources :members, only: [:index, :new, :create, :destroy, :show, :edit]
     member do
       post :upload_document
-      post :change_status
+      post :update_status
     end
     resources :agreement_logs, only: [:index, :create]
   end
