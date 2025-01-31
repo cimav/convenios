@@ -46,9 +46,12 @@
               = agreement.type_acronym
             %span
               -#{"data-type_name" => agreement.type_name}
-              = agreement.agreement_type.name
-          %td{class: "min-w-[130px]", "data-requester" => agreement.requester.nombre}
-            = @employees_on_agreements[agreement.requester_id.to_s.rjust(5, '0')]&.short_name
+              - if agreement.agreement_type
+                = agreement.agreement_type.name
+              - else
+                = 'No hay'
+            %td{class: "min-w-[130px]", "data-requester" => agreement.requester.nombre}
+              = @employees_on_agreements[agreement.requester_id.to_s.rjust(5, '0')]&.short_name
           %td{"data-client" => agreement.client_name}= agreement.client_name
           %td
             - status_info = Agreement.status_info(agreement.status)
