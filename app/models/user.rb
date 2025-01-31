@@ -23,7 +23,7 @@ class User < ApplicationRecord
   scope :recent_hundred, -> { select(:clave, :nombre, :status, :curp, :email).order('no01_cve_emp': :desc).limit(200) }
 
   # Scope para participante, si es necesario filtrar por rol
-  scope :members, -> { select(:clave, :nombre, :status, :curp, :email).where(no01_status: 'A', no01_regimen: 'CYT').order(:nombre) }
+  scope :cyt_actives, -> { select(:clave, :nombre, :status, :curp, :email).where(no01_status: 'A', no01_regimen: 'CYT').order(:nombre) }
 
   # attr_accessor :id
   def id # getter

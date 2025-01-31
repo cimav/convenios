@@ -12,7 +12,7 @@
 
     %div.flex-1.form-control
       = f.label :requester_id, "Solicitante", class: "label"
-      = f.collection_select :requester_id, User.members, :id, :nombre,
+      = f.collection_select :requester_id, @users_cyt_actives, :id, :nombre,
                             { prompt: "Seleccione solicitante" },
                             { class: "select select-bordered w-full" }
 

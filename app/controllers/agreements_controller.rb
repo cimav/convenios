@@ -6,6 +6,7 @@ class AgreementsController < ApplicationController
   before_action :set_agreement, only: [:show, :edit, :update, :validate, :return_for_review, :upload_document, :change_status]
   before_action :authenticate_user!
   before_action :set_breadcrumbs_for_edition, only: [:edit, :update]
+  before_action :set_users_cyt_actives, only: [:new, :edit, :show]
 
   def index
 
@@ -230,4 +231,12 @@ class AgreementsController < ApplicationController
     return true if @agreement.aprobado? && (current_user.creator_of?(@agreement) || current_user.requester_of?(@agreement))
     current_user.juridico?
   end
+
+  def set_users_cyt_actives
+    # concentrar y disminuis la recarga de Usuarios
+    @users_cyt_actives = Rails.cache.fetch('users_cyt_actives', expires_in: 1.day) do
+      User.cyt_actives
+    end
+  end
+
 end

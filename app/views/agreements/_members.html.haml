@@ -52,7 +52,7 @@
         - new_member ||= agreement.members.new
         = form_with model: [agreement, new_member], url: agreement_members_path(agreement),  local: true,  method: :post, multipart: true, data: { turbo: false } do |f_tr|
           %td{ class: "text-xs px-1 py-1" }
-            = f_tr.collection_select :user_id, User.members, :id, :nombre,
+            = f_tr.collection_select :user_id, @users_cyt_actives, :id, :nombre,
                                     {prompt: "Seleccione participante"},
                                     {class: "select select-bordered text-ms h-4 text-sm px-1 py-1", id: :select_member_id,
                                       onchange: "toggleAddMemberButton()", disabled: disable_requester && new_member.profile == "requester"}
