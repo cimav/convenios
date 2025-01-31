@@ -9,7 +9,7 @@ class AgreementsController < ApplicationController
 
   def index
 
-    @agreements = Agreement.for_table(current_user).order('id': :desc)
+    @agreements = Agreement.for_table(current_user).includes(:agreement_type).order('id': :desc)
 
     # Realiza una sola consulta a la base de datos externa para obtener los solicitantes
     # Esta consulta evita el problema del N+1

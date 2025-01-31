@@ -45,22 +45,37 @@ class Agreement < ApplicationRecord
       'agreements.title',
       'agreements.client_name',
       'agreements.status',
+      'agreements.agreement_type_id',
       'agreement_types.acronym AS type_acronym',
       'agreement_types.name AS type_name'
-    ).joins(:agreement_type) # no funciona aqui el order .order('agreements.id': :desc)
+    ).joins(:agreement_type) #.order(id: :desc)
 
     if user.dev?
-      # juridico puede verlos todos; excepto en edicion #, statuses[:aprobado]
+      # todos
     elsif user.juridico?
       # juridico puede verlos todos; excepto en edicion #, statuses[:aprobado]
-      base_query.where.not(status: [statuses[:pendiente]]) # Excluir :pendiente y :aprobado
+      base_query = base_query.where.not(status: [statuses[:pendiente]]) # Excluir :pendiente y :aprobado
     else
       # el resto puede ver donde aparece como creator, requester o como member
-      base_query.joins("LEFT JOIN members ON members.agreement_id = agreements.id")
-                .where(
-                  "agreements.creator_id = :user_id OR agreements.requester_id = :user_id OR members.user_id = :user_id",
-                  user_id: user.id
-                ).distinct
+      #base_query = base_query.joins("LEFT JOIN members ON members.agreement_id = agreements.id")
+      #          .where(
+      #            "agreements.creator_id = :user_id OR agreements.requester_id = :user_id OR members.user_id = :user_id",
+      #            user_id: user.id
+      #          ).distinct
+
+      # Con EXISTS es mas eficiente
+
+      base_query = base_query.where(
+        "agreements.creator_id = :user_id
+          OR agreements.requester_id = :user_id
+          OR EXISTS (
+            SELECT 1 FROM members
+            WHERE members.agreement_id = agreements.id
+            AND members.user_id = :user_id
+          )",
+        user_id: user.id
+      )
+
     end
   }
 
