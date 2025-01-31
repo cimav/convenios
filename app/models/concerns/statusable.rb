@@ -17,9 +17,9 @@ module Statusable
   class_methods do
     def status_info(status)
       {
-        "pendiente" => { icon: "fas fa-clock", color: "text-yellow-500", human: "En Edición",
+        "pendiente" => { icon: "fas fa-clock", color: "text-yellow-500", human: "Edición",
                          hint: "Participantes pueden modificar", action: "Re-editar", tooltip: "" },
-        "en_revision" => { icon: "fas fa-search", color: "text-blue-500", human: "En Revisión",
+        "en_revision" => { icon: "fas fa-search", color: "text-blue-500", human: "Revisión",
                            hint: "Jurídico está examinando el convenio", action: "Revisar", tooltip: "Enviar convenio a Jurídico para su revisión" },
         "aprobado" => { icon: "fas fa-check-circle", color: "text-green-500", human: "Aprobado",
                         hint: "Solicitante debe subir documentos comprobatorios de la firma del cliente", action: "Aprobar", tooltip: "" },

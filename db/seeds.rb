@@ -16,6 +16,14 @@ Document.destroy_all
 Member.destroy_all
 Agreement.destroy_all
 AgreementType.destroy_all
+Role.destroy_all
+
+Role.create!([
+               { role: :developer, user_id: 398 },
+               { role: :juridico, user_id: 477 },
+               { role: :juridico, user_id: 482 },
+               { role: :director, user_id: 8 }
+             ])
 
 AgreementType.create!([
                         {
@@ -89,12 +97,14 @@ lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     agreement_type_id: agreement_types.sample,
     creator_id: rand(1..500), # Asume que hay usuarios con IDs en este rango
 
+    requester_id: rand(1..500),
+
     # Información general de la empresa y representante
     client_name: companies.sample,
     client_address: "Address #{rand(1..100)}, City, Country",
 
-    witness_name: 'testtigo',
-    witness_position: 'funci€øón',
+    witness_name: 'testigo',
+    witness_position: 'función',
 
 
     # Información adicional del acuerdo
@@ -108,8 +118,8 @@ lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
 
     # Estado y control de firmas
 
-    signed_by_cliente: [true, false].sample,
-    signed_by_solicitante: [true, false].sample,
+    signed_by_client: [true, false].sample,
+    signed_by_requester: [true, false].sample,
     signed_by_director: [true, false].sample
   )
 end

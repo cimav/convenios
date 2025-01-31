@@ -13,9 +13,10 @@ class AgreementsController < ApplicationController
 
     # Realiza una sola consulta a la base de datos externa para obtener los solicitantes
     # Esta consulta evita el problema del N+1
-    creator_ids = @agreements.map(&:creator_id).compact # sin nils
+    #employees_ids = @agreements.map(&:creator_id).compact # sin nils
+    employees_ids = @agreements.flat_map { |a| [a.creator_id, a.requester_id] }.compact
     # User usa el scope default que solo carga 5 atributos
-    @creators_on_agreements = User.where(clave: creator_ids.map { |id| format('%05d', id) }).index_by(&:clave)
+    @employees_on_agreements = User.where(clave: employees_ids.map { |id| format('%05d', id) }).index_by(&:clave)
 
   end
 
@@ -82,6 +83,9 @@ class AgreementsController < ApplicationController
     @agreement = Agreement.new(client_type: 'persona_moral',
                                signature_date: Date.today, start_date: Date.today, end_date: Date.today + 1.month,
                                amount: 0.00, status: "pendiente")
+
+    @agreement.creator_id = current_user.id
+    @agreement.requester_id = current_user.id
 
     add_breadcrumb "Nuevo", '#'
 
@@ -179,9 +183,9 @@ class AgreementsController < ApplicationController
   end
 
   def agreement_params
-    params.require(:agreement).permit(:title, :agreement_type_id, :creator_id, :client_name, :client_address,
+    params.require(:agreement).permit(:title, :agreement_type_id, :creator_id, :requester_id, :client_name, :client_address,
       :client_type, :witness_name, :witness_position, :objective, :obligations, :benefits,
-      :signature_date, :start_date, :end_date, :amount, :signed_by_cliente, :signed_by_solicitante, :signed_by_director,
+      :signature_date, :start_date, :end_date, :amount, :signed_by_client, :signed_by_requester, :signed_by_director,
                                       :status, :code, :notes)
   end
 
@@ -223,7 +227,7 @@ class AgreementsController < ApplicationController
   # Regla 1, 2 y 3
   def can_manage_documents?
     return true if @agreement.pendiente?
-    return true if @agreement.aprobado? && (current_user == @agreement.creator || current_user.requester_of?(@agreement))
+    return true if @agreement.aprobado? && (current_user.creator_of?(@agreement) || current_user.requester_of?(@agreement))
     current_user.juridico?
   end
 end

@@ -18,6 +18,18 @@ class Agreement < ApplicationRecord
     self.creator_id = user.clave.to_i if user.is_a?(User)
   end
 
+  # Método personalizado para cargar el requester
+  def requester
+    # Formatea el requester a 5 dígitos y busca el User correspondiente
+    formatted_id = format('%05d', requester_id || 0)
+    User.find_by(clave: formatted_id) # regresa el 1er registro encontrado
+  end
+  # Método personalizado para asignar el requester
+  def requester=(user)
+    # Convierte el User#clave a un valor numérico y lo asigna a creator_id
+    self.requester_id = user.clave.to_i if user.is_a?(User)
+  end
+
   belongs_to :agreement_type
   has_many :members, dependent: :destroy
   has_many :documents, dependent: :destroy
@@ -28,6 +40,7 @@ class Agreement < ApplicationRecord
     base_query = select(
       'agreements.id',
       'agreements.creator_id',
+      'agreements.requester_id',
       'agreements.code',
       'agreements.title',
       'agreements.client_name',
@@ -36,14 +49,16 @@ class Agreement < ApplicationRecord
       'agreement_types.name AS type_name'
     ).joins(:agreement_type).order(id: :desc)
 
-    if user.juridico?
+    if user.dev?
+      # juridico puede verlos todos; excepto en edicion #, statuses[:aprobado]
+    elsif user.juridico?
       # juridico puede verlos todos; excepto en edicion #, statuses[:aprobado]
       base_query.where.not(status: [statuses[:pendiente]]) # Excluir :pendiente y :aprobado
     else
-      # el resto puede ver donde aparece como creator o como member
+      # el resto puede ver donde aparece como creator, requester o como member
       base_query.joins("LEFT JOIN members ON members.agreement_id = agreements.id")
                 .where(
-                  "agreements.creator_id = :user_id OR members.user_id = :user_id",
+                  "agreements.creator_id = :user_id OR agreements.requester_id = :user_id OR members.user_id = :user_id",
                   user_id: user.id
                 ).distinct
     end
@@ -54,6 +69,9 @@ class Agreement < ApplicationRecord
 
   # AgreementType: Presente
   validates :agreement_type, presence: { message: "debe estar presente" }
+
+  # requester: Presente
+  validates :requester_id, presence: { message: "debe estar presente" }
 
   # Nombre del cliente y dirección: Presente y con un mínimo de 100 caracteres
   validates :client_name, length: { minimum: 5, message: "debe tener al menos 100 caracteres" }
@@ -74,7 +92,7 @@ class Agreement < ApplicationRecord
   def formatted_code
     begin
       Integer(code)
-      "parcial-#{code.to_s.rjust(3, '0')}"
+      "inicial-#{code.to_s.rjust(3, '0')}"
     rescue ArgumentError, TypeError
       code.to_s.rjust(10, '0')
     end

@@ -7,6 +7,7 @@ class CreateAgreements < ActiveRecord::Migration[7.1]
       t.references :agreement_type, null: false, foreign_key: true # Relación con AgreementType
 
       t.integer :creator_id                     # Creador. Referencia a Users que son no01 en NetMultix
+      t.integer :requester_id                  # Solicitante. Referencia a Users que son no01 en NetMultix
 
       # Información general de la empresa/cliente (moral/fisico)  y representante
       # para cada convenio requerir toda la info.
@@ -16,7 +17,6 @@ class CreateAgreements < ActiveRecord::Migration[7.1]
 
       t.string :witness_name, null: false
       t.string :witness_position, null: false
-
 
       # Información adicional del acuerdo
       t.text :objective                               # Objeto del acuerdo
@@ -29,12 +29,12 @@ class CreateAgreements < ActiveRecord::Migration[7.1]
 
       t.decimal :amount, precision: 10, scale: 2      # Monto total (si el acuerdo es financiero)
 
-      # Estado
+      # Status
       t.integer :status, default: 0                                # Estado actual del acuerdo
 
       # Firmas (dependientes del estado y son firmas por escito)
-      t.boolean :signed_by_cliente, default: false     # Firmado por el cliente
-      t.boolean :signed_by_solicitante, default: false      # Firmado por CIMAV
+      t.boolean :signed_by_client, default: false     # Firmado por el cliente
+      t.boolean :signed_by_requester, default: false      # Firmado por CIMAV
       t.boolean :signed_by_director, default: false      # Firmado por CIMAV
 
       t.timestamps

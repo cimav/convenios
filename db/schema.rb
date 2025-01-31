@@ -62,6 +62,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_29_165941) do
     t.string "title", null: false
     t.bigint "agreement_type_id", null: false
     t.integer "creator_id"
+    t.integer "requester_id"
     t.string "client_name", null: false
     t.string "client_address", null: false
     t.string "client_type", default: "persona_moral", null: false
@@ -75,8 +76,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_29_165941) do
     t.date "end_date"
     t.decimal "amount", precision: 10, scale: 2
     t.integer "status", default: 0
-    t.boolean "signed_by_cliente", default: false
-    t.boolean "signed_by_solicitante", default: false
+    t.boolean "signed_by_client", default: false
+    t.boolean "signed_by_requester", default: false
     t.boolean "signed_by_director", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

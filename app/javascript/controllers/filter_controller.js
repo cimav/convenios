@@ -23,6 +23,7 @@ export default class extends Controller {
 
             const titleEle = agreementRow.querySelector("[data-title]");
             const clientEle = agreementRow.querySelector("[data-client]");
+            const requesterEle = agreementRow.querySelector("[data-requester]");
             //const creatorEle = agreementRow.querySelector("[data-creator]");
             //const acronymEle = agreementRow.querySelector("[data-acronym]");
             const statusEle = agreementRow.querySelector("[data-status]");
@@ -30,6 +31,7 @@ export default class extends Controller {
 
             const title = agreementRow.getAttribute("data-title")?.toLowerCase() || "";
             const client = agreementRow.getAttribute("data-client")?.toLowerCase() || "";
+            const requester = agreementRow.getAttribute("data-requester")?.toLowerCase() || "";
             //const creator = agreementRow.getAttribute("data-creator")?.toLowerCase() || "";
             //const acronym = agreementRow.getAttribute("data-acronym")?.toLowerCase() || "";
             const status = agreementRow.getAttribute("data-status")?.toLowerCase() || "";
@@ -38,7 +40,7 @@ export default class extends Controller {
             // Verifica si cada término de búsqueda está en `title` o `companyName`
             const matches = terms.every(
                 term => code.includes(term) || title.includes(term) || client.includes(term)
-                    ||  status.includes(term)
+                    ||  status.includes(term) || requester.includes(term)
 
                 // creator.includes(term)  || acronym.includes(term)  ||
 
@@ -55,6 +57,7 @@ export default class extends Controller {
             if (matches) {
                 this.highlightMatches(titleEle, terms);
                 this.highlightMatches(clientEle, terms);
+                this.highlightMatches(requesterEle, terms);
                 // this.highlightMatches(creatorEle, terms);
                 // this.highlightMatches(acronymEle, terms);
                 this.highlightMatches(statusEle, terms);
@@ -63,6 +66,7 @@ export default class extends Controller {
                 // Limpiar resaltado si no hay coincidencias
                 this.clearHighlights(titleEle);
                 this.clearHighlights(clientEle);
+                this.clearHighlights(requesterEle);
                 // this.clearHighlights(creatorEle);
                 // this.clearHighlights(acronymEle);
                 this.clearHighlights(statusEle);

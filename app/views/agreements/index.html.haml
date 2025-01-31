@@ -23,9 +23,9 @@
       %tr
         %th Código
         %th Título
-        %th Tipo de Acuerdo
-        %th Propietario
-        %th Nombre de la Empresa
+        %th Tipo
+        %th Solicitante
+        %th Cliente
         %th Status
     %tbody{"data-controller" => "filter"}
       - @agreements.each do |agreement|
@@ -35,6 +35,7 @@
           "data-controller" => "navigate", "data-action" => "click->navigate#toShow", "data-navigate-url" => agreement_path(agreement),
           "data-title" => agreement.title, "data-client" => agreement.client_name,
           "data-status" => agreement.status_human, "data-code" => agreement.formatted_code,
+          "data-requester" => agreement.requester.nombre,
           "data-filter-target" => "agreementRow"}
           %td{class: "w-[100px] text-right"}
             %span.px-1.border{"data-code" => agreement.formatted_code}
@@ -43,9 +44,11 @@
           %td{class: "min-w-[200px]"}
             -#%span.badge.badge-ghost.badge-xs.custom-badge-code
               = agreement.type_acronym
-            %span{"data-type_name" => agreement.type_name}
-              = agreement.type_name
-          %td{class: "min-w-[130px]"}= @creators_on_agreements[agreement.creator_id.to_s.rjust(5, '0')]&.short_name
+            %span
+              -#{"data-type_name" => agreement.type_name}
+              = agreement.agreement_type.name
+          %td{class: "min-w-[130px]", "data-requester" => agreement.requester.nombre}
+            = @employees_on_agreements[agreement.requester_id.to_s.rjust(5, '0')]&.short_name
           %td{"data-client" => agreement.client_name}= agreement.client_name
           %td
             - status_info = Agreement.status_info(agreement.status)

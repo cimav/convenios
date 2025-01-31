@@ -7,13 +7,13 @@
     %div.form-control{class: "w-1/2"}
       = f.label :agreement_type_id, "Tipo de Convenio", class: "label"
       = f.collection_select :agreement_type_id, AgreementType.all, :id, :name,
-                            { prompt: "Seleccione un tipo de convenio" },
+                            { prompt: "Seleccione tipo de convenio" },
                             { class: "select select-bordered w-full" }
 
-    -#%div.flex-1.form-control
-      = f.label :solicitante_id, "Solicitante", class: "label"
-      = f.collection_select :solicitante_id, User.members, :id, :nombre,
-                            { prompt: "Seleccione un solicitante" },
+    %div.flex-1.form-control
+      = f.label :requester_id, "Solicitante", class: "label"
+      = f.collection_select :requester_id, User.members, :id, :nombre,
+                            { prompt: "Seleccione solicitante" },
                             { class: "select select-bordered w-full" }
 
   %div.form-control
@@ -76,12 +76,12 @@
 
   %div.flex.space-x-4
     %div.form-control.block{ style: "margin-right: 2rem !important;" }
-      = f.check_box :signed_by_cliente, class: "checkbox"
-      = f.label :signed_by_cliente, "Firmado por Cliente", class: "ml-2"
+      = f.check_box :signed_by_client, class: "checkbox"
+      = f.label :signed_by_client, "Firmado por Cliente", class: "ml-2"
 
     %div.form-control.block{ style: "margin-right: 2rem !important;" }
-      = f.check_box :signed_by_solicitante, class: "checkbox"
-      = f.label :signed_by_solicitante, "Firmado por Solicitante", class: "ml-2"
+      = f.check_box :signed_by_requester, class: "checkbox"
+      = f.label :signed_by_requester, "Firmado por Solicitante", class: "ml-2"
 
     %div.form-control.block
       = f.check_box :signed_by_director, class: "checkbox"

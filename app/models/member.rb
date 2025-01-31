@@ -3,13 +3,15 @@ class Member < ApplicationRecord
   belongs_to :agreement
 
   # Validación personalizada
-  validate :single_requester_per_agreement
+  # validate :single_requester_per_agreement
+
+  # requester: 0,
+  # "requester" => "Solicitante",
 
   # Enums
-  enum profile: { requester: 0, technical: 1, reviewer: 2, other: 4 }
+  enum profile: { technical: 1, reviewer: 2, other: 4 }
   def profile_human
     {
-      "requester" => "Solicitante",
       "technical" => "Técnico Responsable",
       "reviewer" => "Revisor",
       "other" => "Otro"
@@ -50,13 +52,13 @@ class Member < ApplicationRecord
 
   private
 
-  def user_must_be_solicitante
-    unless user.belongs_to_role? :solicitante
+  def deprecated_user_must_be_requester
+    unless user.belongs_to_role? :requester
       errors.add("Responsable", "técnico debe tener el rol de solicitante")
     end
   end
 
-  def single_requester_per_agreement
+  def deprecated_single_requester_per_agreement
     if profile == "requester" && agreement.members.where(profile: "requester").where.not(id: id).exists?
       errors.add("", "Solo puede haber un Solicitante por convenio. Si desea cambiar de Solicitante, primero elimine al anterior.")
     end

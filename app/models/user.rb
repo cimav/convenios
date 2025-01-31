@@ -97,11 +97,12 @@ class User < ApplicationRecord
   end
 
   def requester_of?(agreement)
-    Member.exists?(user_id: id, agreement_id: agreement.id, profile: "requester")
+    # Member.exists?(user_id: id, agreement_id: agreement.id, profile: "requester")
+    agreement.requester_id == id
   end
 
   def juridico?
-    belongs_to_role?(:juridico) || belongs_to_role?(:developer)
+    belongs_to_role?(:juridico)
   end
 
   def dev?

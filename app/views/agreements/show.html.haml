@@ -41,8 +41,11 @@
             %div.tooltip.tooltip-warning.absolute{ style: "top: -5px; right: 5px;",
               "data-tip" => "Es el creador del convenio", }
               %i.fas.fa-exclamation-circle.text-yellow-500.cursor-pointer
-
           %td.text-gray-700= @agreement.creator&.nombre
+        %tr
+          %td.relative.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
+            %span Solicitante:
+          %td.text-gray-700= @agreement.requester&.nombre
         %tr
           %td.font-bold.text-right.text-gray-600{ style: "width: 200px; padding-right: 16px;" } Fechas:
           %td.text-gray-700
@@ -99,13 +102,13 @@
             %div.flex.justify-between
               %span
                 %strong.text-sm.text-gray-600 Cliente:
-                - if @agreement.signed_by_cliente?
+                - if @agreement.signed_by_client?
                   %i.fa.fa-check-circle.text-green-500.fa-lg
                 - else
                   %i.fa.fa-clock.text-yellow-500.fa-lg
               %span
                 %strong.text-sm.text-gray-600 Solicitante:
-                - if @agreement.signed_by_solicitante?
+                - if @agreement.signed_by_requester?
                   %i.fa.fa-check-circle.text-green-500.fa-lg
                 - else
                   %i.fa.fa-clock.text-yellow-500.fa-lg
