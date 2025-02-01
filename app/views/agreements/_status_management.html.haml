@@ -13,7 +13,7 @@
       - if allowed_statuses.any?
         %div.flex.justify-center.space-x-2
           - allowed_statuses.each do |status|
-            %form{ action: change_status_agreement_path(agreement), method: :post, "data-turbo-confirm" => "¿Estás seguro de cambiar el estado?" }
+            %form{ action: update_status_agreement_path(agreement), method: :post, "data-turbo-confirm" => "¿Estás seguro de cambiar el estado?" }
               %input{ type: "hidden", name: "new_status", value: status }
               %button.btn.btn-sm.flex.items-center{ class: Agreement.status_info(status)[:color], style: "display: flex; align-items: center; gap: 0.5rem;" }
                 %i{ class: Agreement.status_info(status)[:icon], style: "display: inline-block;" }
