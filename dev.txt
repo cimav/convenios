@@ -35,3 +35,9 @@ bundle lock --add-platform ruby --add-platform x86_64-linux --add-platform x86_6
 
 bundle platform
 muestra las plataformas disponibles para mi proyecto
+
+
+cat ~/.zshrc
+source ~/.zshrc
+
+
