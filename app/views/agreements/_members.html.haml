@@ -4,13 +4,7 @@
   %thead
     %tr
       %th Nombre
-      %th.relative
-        %div
-          Perfil
-          %div.tooltip.tooltip-warning.absolute{ style: "top: -5px; left: -5px;",
-                "data-tip" => "Rol del participante", }
-            %i.fas.fa-exclamation-circle.text-yellow-500.cursor-pointer
-
+      %th Rol
       %th Nota
       %th
   %tbody{id: "members_tbody"}
@@ -54,14 +48,14 @@
           %td{ class: "text-xs px-1 py-1" }
             = f_tr.collection_select :user_id, @users_cyt_actives, :id, :nombre,
                                     {prompt: "Seleccione participante"},
-                                    {class: "select select-bordered text-ms h-4 text-sm px-1 py-1", id: :select_member_id,
+                                    {class: "select select-bordered text-ms h-full text-sm px-1 py-1", id: :select_member_id,
                                       onchange: "toggleAddMemberButton()", disabled: disable_requester && new_member.profile == "requester"}
 
           %td{ class: "text-xs px-1 py-1" }
             = f_tr.collection_select :profile, Member.profiles.map { |key, _| [Member.new(profile: key).profile_human, key] },
                            :last, :first,
                            {prompt: "Seleccione perfil"},
-                           {class: "select select-bordered text-ms w-40 h-4 text-sm px-1 py-1 ", id: :select_profile_id , onchange: "toggleAddMemberButton()"}
+                           {class: "select select-bordered text-ms w-40 h-full text-sm px-1 py-1 ", id: :select_profile_id , onchange: "toggleAddMemberButton()"}
 
           %td.px-1.py-0
             = f_tr.text_field :notes, class: "textarea textarea-bordered w-full", placeholder: "Notas adicionales sobre el participante",

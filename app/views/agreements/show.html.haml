@@ -37,8 +37,9 @@
           %td.text-gray-700= @agreement.agreement_type.name
         %tr
           %td.relative.font-bold.text-right.align-top.text-gray-600{ style: "width: 200px; padding-right: 16px;" }
-            %span Propietario:
-            %div.tooltip.tooltip-warning.absolute{ style: "top: -5px; right: 5px;",
+            Creador:
+            -#%span Propietario:
+            -#%div.tooltip.tooltip-warning.absolute{ style: "top: -5px; right: 5px;",
               "data-tip" => "Es el creador del convenio", }
               %i.fas.fa-exclamation-circle.text-yellow-500.cursor-pointer
           %td.text-gray-700= @agreement.creator&.nombre

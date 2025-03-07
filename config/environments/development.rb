@@ -3,6 +3,8 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.public_file_server.enabled = true
+
   # No sirvas activos precompilados en desarrollo
   config.assets.compile = true
   config.assets.debug = true

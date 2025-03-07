@@ -57,6 +57,8 @@ gem 'hotwire-rails'
 
 gem 'omniauth-google-oauth2'
 
+# STMP con refresh_token
+#gem 'mail'
+gem 'signet' #, '0.16.0'
 
-
-
+gem 'dotenv-rails', groups: [:development]

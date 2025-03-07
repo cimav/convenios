@@ -1,4 +1,7 @@
 class AgreementMailer < ApplicationMailer
+
+  before_action :set_xoauth2_token
+
   def agreement_validated(agreement)
     @agreement = agreement
     mail(to: @agreement.client.email, subject: "Su acuerdo ha sido validado")
@@ -12,6 +15,7 @@ class AgreementMailer < ApplicationMailer
   default from: ENV["NOTIFICACIONES_EMAIL"] # Define el email remitente
 
   def log_notification(agreement, agreement_log)
+
     @agreement = agreement
     @agreement_log = agreement_log
 
@@ -29,6 +33,13 @@ class AgreementMailer < ApplicationMailer
       to: recipients,
       subject: "Nuevo seguimiento en el convenio/contrato ##{@agreement.id}"
     )
+  end
+
+  private
+
+  def set_xoauth2_token
+    # REQUERIDO
+    ActionMailer::Base.smtp_settings[:password] = generate_xoauth2_token(ENV["NOTIFICACIONES_EMAIL"])
   end
 
 end

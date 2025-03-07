@@ -55,7 +55,7 @@
           %tr#document-form
             = form_with model: @document, url: upload_document_agreement_path(@agreement), local: true, class: "space-y-6", multipart: true, data: { turbo: false } do |f|
               %td.py-0
-                = f.select :document_type_id, Document::DOCUMENT_TYPES.map { |id, name| [name, id] }, {}, class: "select select-bordered h-4 text-sm px-1 py-1"
+                = f.select :document_type_id, Document::DOCUMENT_TYPES.map { |id, name| [name, id] }, {}, class: "select select-bordered h-full text-sm px-1 py-1"
 
               %td.py-1
                 %div#document_dropzone.border-2.border-dashed.border-gray-300.rounded-lg.p-2.flex.flex-col.items-center.justify-center

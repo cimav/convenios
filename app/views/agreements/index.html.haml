@@ -37,8 +37,8 @@
           "data-status" => agreement.status_human, "data-code" => agreement.formatted_code,
           "data-requester" => agreement.requester.nombre,
           "data-filter-target" => "agreementRow"}
-          %td{class: "w-[100px] text-right"}
-            %span.px-1.border{"data-code" => agreement.formatted_code}
+          %td{class: "w-[120px] text-right"}
+            %span.badge.badge-soft.badge-neutral.text-xs.w-full.p-0{"data-code" => agreement.formatted_code}
               = agreement.formatted_code
           %td{"data-title" => agreement.title}= agreement.title
           %td{class: "min-w-[200px]"}

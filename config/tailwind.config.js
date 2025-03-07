@@ -2,6 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   content: [
+    "./app/views/**/*.html.haml",
     './public/*.html',
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
@@ -14,8 +15,10 @@ module.exports = {
 
   ],
   safelist: [
+    "btn", "btn-primary", "btn-secondary", "btn-accent", "btn-outline",
+    "btn-circle", "btn-lg", "btn-sm",
     'text-customOrange-500', // Agrega las clases personalizadas aquí. Avoid el PurgeCSS
-    'text-customPurple-500',
+    'text-customPurple-500'
   ],  theme: {
     extend: {
       fontFamily: {
@@ -32,10 +35,11 @@ module.exports = {
     },
   },
   plugins: [
+    require("daisyui"),
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
-    require('@tailwindcss/container-queries'),
-    require("daisyui")
+    require('@tailwindcss/container-queries')
+
   ],
   daisyui: {
     themes: ["corporate"], // Establece el tema a "corporate"

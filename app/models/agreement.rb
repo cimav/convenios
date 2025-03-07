@@ -107,7 +107,7 @@ class Agreement < ApplicationRecord
   def formatted_code
     begin
       Integer(code)
-      "inicial-#{code.to_s.rjust(3, '0')}"
+      "#{code.to_s.rjust(3, '0')}"
     rescue ArgumentError, TypeError
       code.to_s.rjust(10, '0')
     end

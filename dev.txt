@@ -37,6 +37,14 @@ bundle platform
 muestra las plataformas disponibles para mi proyecto
 
 
+*** En caso de que las clases como .btn-secondary y otras no muestren su estilo
+rails tailwindcss:build
+rm -rf tmp && rails assets:precompile
+yarn add daisyui
+yarn add @tailwindcss/forms @tailwindcss/typography @tailwindcss/container-queries daisyui
+
+
+## Necesita recargar las variables de ambiente que apuntan al instantclient
 cat ~/.zshrc
 source ~/.zshrc
 
