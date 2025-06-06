@@ -29,7 +29,8 @@ class SessionsController < ApplicationController
     #File.open(Rails.root.join('config', 'gmail-credentials.yaml'), 'w') do |file|
     #  file.write(credentials.to_yaml)
     #end
-    File.open(Rails.root.join('config', 'gmail-credentials.json'), 'w') do |file|
+    #File.open(Rails.root.join('config', 'gmail-credentials.json'), 'w') do |file|
+    File.open(Rails.root.join('config', 'atencion_posgrado_credentials.json'), 'w') do |file|
       file.write(credentials.to_json)
     end
 =end

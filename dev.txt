@@ -49,3 +49,4 @@ cat ~/.zshrc
 source ~/.zshrc
 
 
+ scp -o HostKeyAlgorithms=ssh-rsa,ssh-dss config/servicio-cliente-credentials.json calderon@10.0.0.27:/home/calderon

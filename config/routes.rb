@@ -51,4 +51,8 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'dashboard#index', as: :dashboard
   get 'dashboard/:id', to: 'dashboard#show', as: :dashboard_show
 
+  namespace :api do
+    post "proxy_x_oauth2", to: "proxy_mailer#re_send"
+  end
+
 end

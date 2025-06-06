@@ -50,8 +50,6 @@ module Convenios
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    #       password: -> { generate_xoauth2_token("notificaciones@cimav.edu.mx") }
-
     config.action_mailer.raise_delivery_errors = true
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
@@ -60,6 +58,7 @@ module Convenios
       domain: "gmail.com", # "cimav.edu.mx",
       authentication: :xoauth2, # ✅ Required for OAuth 2.0
       user_name: ENV["NOTIFICACIONES_EMAIL"],
+      # password: -> { generate_xoauth2_token("notificaciones@cimav.edu.mx") }
       enable_starttls_auto: true
     }
 
