@@ -62,3 +62,5 @@ gem 'omniauth-google-oauth2'
 gem 'signet' #, '0.16.0'
 
 gem 'dotenv-rails', groups: [:development]
+
+gem 'omniauth-rails_csrf_protection'

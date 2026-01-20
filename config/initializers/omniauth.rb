@@ -15,4 +15,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   }
   OmniAuth.config.allowed_request_methods = [:post, :get]
   OmniAuth.config.silence_get_warning = true
+  OmniAuth.config.full_host = if Rails.env.production?
+                                "https://convenios.cimav.edu.mx"
+                              else
+                                "http://localhost:3000"
+                              end
 end
