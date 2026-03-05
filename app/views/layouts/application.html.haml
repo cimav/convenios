@@ -9,7 +9,8 @@
     = javascript_importmap_tags # Esto carga el archivo application.js en todas las vistas
 
     /= stylesheet_link_tag "application", "data-turbo-track": "reload"
-    %link{ href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css", rel: "stylesheet" }
+    /%link{ href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css", rel: "stylesheet" }
+    %link{:rel=>"stylesheet", :href=>"https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"}
 
     %script{ src: "https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" }
     %link{ rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" }
